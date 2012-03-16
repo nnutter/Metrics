@@ -2,7 +2,9 @@ use strict;
 use warnings;
 
 package Metrics::Collector::Statsd;
-require Net::Statsd;
+use base 'Metrics::Collector';
+
+require Net::Statsd 0.03;
 
 sub serialize_name {
     my $name = shift;

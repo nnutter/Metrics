@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 package Metrics;
-use Carp;
+use Carp 1.20;
 
 sub new {
     my $class = shift;
