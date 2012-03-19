@@ -7,6 +7,7 @@ use base 'Metrics';
 use overload (
     '++' => \&increment,
     '--' => \&decrement,
+    fallback => 1,
 );
 
 sub increment {
