@@ -4,7 +4,7 @@ use warnings;
 package Metrics::Collector::Statsd;
 use base 'Metrics::Collector';
 
-require Net::Statsd 0.03;
+require Net::Statsd;
 
 sub serialize_name {
     my $name = shift;
