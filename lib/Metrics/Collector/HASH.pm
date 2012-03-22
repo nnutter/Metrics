@@ -17,7 +17,7 @@ sub value_of {
     return $self->{VALUE}{$name};
 }
 
-sub serialize_name {
+sub flatten_name {
     my $name = shift;
     if (ref($name) eq 'ARRAY') {
         $name = join('.', @$name);
@@ -27,13 +27,13 @@ sub serialize_name {
 
 sub increment {
     my ($self, $name) = @_;
-    my $sname = serialize_name($name);
+    my $sname = flatten_name($name);
     return $self->{VALUE}{$sname} += 1;
 }
 
 sub decrement {
     my ($self, $name) = @_;
-    my $sname = serialize_name($name);
+    my $sname = flatten_name($name);
     return $self->{VALUE}{$sname} -= 1;
 }
 

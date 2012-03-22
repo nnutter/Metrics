@@ -6,7 +6,7 @@ use base 'Metrics::Collector';
 
 require Net::Statsd;
 
-sub serialize_name {
+sub flatten_name {
     my $name = shift;
     if (ref($name) eq 'ARRAY') {
         $name = join('.', @$name);
@@ -18,7 +18,7 @@ sub increment {
     my ($self, $name) = @_;
     local $Net::Statsd::HOST = $self->host;
     local $Net::Statsd::PORT = $self->port;
-    Net::Statsd::increment(serialize_name($name));
+    Net::Statsd::increment(flatten_name($name));
     return;
 }
 
@@ -26,7 +26,7 @@ sub decrement {
     my ($self, $name) = @_;
     local $Net::Statsd::HOST = $self->host;
     local $Net::Statsd::PORT = $self->port;
-    Net::Statsd::decrement(serialize_name($name));
+    Net::Statsd::decrement(flatten_name($name));
     return;
 }
 
