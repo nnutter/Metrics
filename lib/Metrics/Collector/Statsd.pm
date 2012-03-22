@@ -14,6 +14,8 @@ sub flatten_name {
     return $name;
 }
 
+# COUNTER METHODS
+
 sub increment {
     my ($self, $name) = @_;
     local $Net::Statsd::HOST = $self->host;
@@ -27,6 +29,16 @@ sub decrement {
     local $Net::Statsd::HOST = $self->host;
     local $Net::Statsd::PORT = $self->port;
     Net::Statsd::decrement(flatten_name($name));
+    return;
+}
+
+# TIMER METHODS
+
+sub timing {
+    my ($self, $name, $value) = @_;
+    local $Net::Statsd::HOST = $self->host;
+    local $Net::Statsd::PORT = $self->port;
+    Net::Statsd::timing($name, $value);
     return;
 }
 
