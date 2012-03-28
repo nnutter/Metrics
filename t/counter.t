@@ -6,7 +6,7 @@ use Test::More;
 my $total_tests = 0;
 
 do {
-    $total_tests += 7;
+    $total_tests += 9;
 
     use_ok('Metrics::Collector::HASH');
 
@@ -25,6 +25,12 @@ do {
 
     $pennies--;
     is($pennies->collector->value_of('pennies'), 0, 'decremented "pennies" counter');
+
+    $pennies += 4;
+    is($pennies->collector->value_of('pennies'), 4, 'incremented "pennies" counter by four');
+
+    $pennies -= 2;
+    is($pennies->collector->value_of('pennies'), 2, 'decremented "pennies" counter by two');
 };
 
 done_testing($total_tests);

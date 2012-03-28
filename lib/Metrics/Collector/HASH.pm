@@ -27,18 +27,21 @@ sub flatten_name {
 
 # COUNTER METHODS
 
-sub increment {
-    my ($self, $name) = @_;
+sub update_counter {
+    my ($self, $name, $value) = @_;
     my $sname = flatten_name($name);
-    $self->{VALUE}{$sname} += 1;
+    $self->{VALUE}{$sname} += $value;
     return;
 }
 
+sub increment {
+    my ($self, $name, $value) = @_;
+    return shift->update_counter($name, $value);
+}
+
 sub decrement {
-    my ($self, $name) = @_;
-    my $sname = flatten_name($name);
-    $self->{VALUE}{$sname} -= 1;
-    return;
+    my ($self, $name, $value) = @_;
+    return $self->update_counter($name, -1 * $value);
 }
 
 # TIMER METHODS

@@ -16,20 +16,22 @@ sub flatten_name {
 
 # COUNTER METHODS
 
-sub increment {
-    my ($self, $name) = @_;
+sub update_counter {
+    my ($self, $name, $value) = @_;
     local $Net::Statsd::HOST = $self->host;
     local $Net::Statsd::PORT = $self->port;
-    Net::Statsd::increment(flatten_name($name));
+    Net::Statsd::update_stats(flatten_name($name), $value);
     return;
 }
 
+sub increment {
+    my ($self, $name, $value) = @_;
+    return $self->update_counter($name, $value);
+}
+
 sub decrement {
-    my ($self, $name) = @_;
-    local $Net::Statsd::HOST = $self->host;
-    local $Net::Statsd::PORT = $self->port;
-    Net::Statsd::decrement(flatten_name($name));
-    return;
+    my ($self, $name, $value) = @_;
+    return $self->update_counter($name, -1 * $value);
 }
 
 # TIMER METHODS
