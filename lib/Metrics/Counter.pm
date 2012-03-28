@@ -40,3 +40,33 @@ sub decrement {
 }
 
 1;
+
+__END__
+=pod
+
+=head1 NAME
+
+Metrics::Counter - Delegate relative changes to a Metrics::Collector.
+
+=head1 VERSION
+
+version ALPHA
+
+=head1 SYNOPSIS
+
+    # Create a counter object.
+    my $pennies = Metrics::Counter->new(name => 'pennies', collector => $statsd);
+
+    # Count stuff.
+    $pennies++;
+    $pennies--
+    $pennies += 5;
+    $pennies -= 5;
+
+=head1 DESCRIPTION
+
+This module delegates relative changes for a named counter, e.g.
+'pennies', to a collector for reporting (Graphite) or
+aggregation (Statsd).
+
+=cut
