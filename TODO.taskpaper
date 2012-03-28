@@ -1,4 +1,11 @@
-- Implement additional collectors:
-	- Graphite
-	- Ganglia
+- Possible Collectors:
 	- Console
+	- Ganglia
+	- Graphite
+	- Redis
+- Possible Metrics:
+	- Gauge
+	- Counter
+	- Meter
+	- Histogram
+	- Timer
