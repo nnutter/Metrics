@@ -40,7 +40,7 @@ sub timing {
     my ($self, $name, $value) = @_;
     local $Net::Statsd::HOST = $self->host;
     local $Net::Statsd::PORT = $self->port;
-    Net::Statsd::timing($name, $value);
+    Net::Statsd::timing(flatten_name($name), $value);
     return;
 }
 
