@@ -20,6 +20,9 @@ sub new {
 
     my $collector = delete $params{collector};
     unless (defined $collector) {
+        $collector = Metrics::Collector->default_collector;
+    }
+    unless (defined $collector) {
         Carp::carp 'collector is required';
         return;
     }

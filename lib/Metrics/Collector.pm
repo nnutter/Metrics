@@ -4,6 +4,16 @@ use warnings;
 package Metrics::Collector;
 use Carp 1.20;
 
+my $default_collector;
+sub default_collector {
+    return $default_collector;
+}
+
+sub init {
+    my $class = shift;
+    $default_collector = $class->new(@_);
+}
+
 sub new {
     my $class = shift;
     my %params = @_;
