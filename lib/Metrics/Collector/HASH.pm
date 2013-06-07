@@ -14,6 +14,7 @@ sub new {
 sub value_of {
     my $self = shift;
     my $name = shift;
+    $name = flatten_name($name);
     return $self->{VALUE}{$name};
 }
 
