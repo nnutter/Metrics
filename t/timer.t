@@ -6,10 +6,31 @@ use Time::HiRes;
 use Metrics::Timer;
 use Metrics::Collector::HASH;
 
-my $total_tests = 0;
+plan tests => 2;
 
-do {
-    $total_tests += 7;
+subtest 'flatten_name' => sub {
+    plan tests => 6;
+
+    my $collector = Metrics::Collector::HASH->new(host => '', port => '');
+    ok($collector, 'created a collector');
+
+    my $name = ['timer', 'beans'];
+    my $timer = Metrics::Timer->new(name => $name, collector => $collector);
+    ok($timer, 'created a timer');
+
+    $timer->reset();
+    Time::HiRes::usleep(100_000); # timer reports ms not us
+    $timer->mark();
+    ok($timer->collector->value_of($name) >= 0, 'accessed value by arrayref');
+
+    my $flat_name = Metrics::Collector::HASH::flatten_name($name);
+    like($flat_name, qr/$name->[0]/, "flat_name is like $name->[0]");
+    like($flat_name, qr/$name->[1]/, "flat_name is like $name->[1]");
+    ok($timer->collector->value_of($flat_name) >= 0, 'accessed value by flat_name');
+};
+
+subtest 'operations' => sub {
+    plan tests => 4;
 
     my $collector = Metrics::Collector::HASH->new(host => '', port => '');
     ok($collector, 'created a collector');
@@ -25,5 +46,3 @@ do {
     ok($load_time->collector->value_of('load_time') >= 100, '"load_time" now has a reported timing')
         or diag('load_time = ' . $load_time->collector->value_of('load_time'));
 };
-
-done_testing($total_tests);
