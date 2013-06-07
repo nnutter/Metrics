@@ -36,6 +36,13 @@ sub flatten_name {
     return $name;
 }
 
+sub assign_value {
+    my ($self, $name, $value) = @_;
+    my $sname = flatten_name($name);
+    $self->{VALUE}{$sname} = $value;
+    return;
+}
+
 # COUNTER METHODS
 
 sub update_counter {
@@ -59,9 +66,14 @@ sub decrement {
 
 sub timing {
     my ($self, $name, $value) = @_;
-    my $sname = flatten_name($name);
-    $self->{VALUE}{$sname} = $value;
-    return;
+    $self->assign_value($name, $value);
+}
+
+# GAUGE METHODS
+
+sub gauge {
+    my ($self, $name, $value) = @_;
+    $self->assign_value($name, $value);
 }
 
 1;

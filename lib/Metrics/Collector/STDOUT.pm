@@ -8,6 +8,12 @@ sub flatten_name {
     return Metrics::Collector::HASH::flatten_name(@_);
 }
 
+sub assign_value {
+    my ($self, $name, $value) = @_;
+    $self->SUPER::timing($name, $value);
+    printf(qq(%s = %s\n), flatten_name($name), $self->value_of($name));
+}
+
 # COUNTER METHODS
 
 sub update_counter {
@@ -30,8 +36,14 @@ sub decrement {
 
 sub timing {
     my ($self, $name, $value) = @_;
-    $self->SUPER::timing($name, $value);
-    printf(qq(%s = %s\n), flatten_name($name), $self->value_of($name));
+    $self->assign_value($name, $value);
+}
+
+# GAUGE METHODS
+
+sub gauge {
+    my ($self, $name, $value) = @_;
+    $self->assign_value($name, $value);
 }
 
 1;

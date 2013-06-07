@@ -44,4 +44,14 @@ sub timing {
     return;
 }
 
+# GAUGE METHODS
+
+sub gauge {
+    my ($self, $name, $value) = @_;
+    local $Net::Statsd::HOST = $self->host;
+    local $Net::Statsd::PORT = $self->port;
+    Net::Statsd::gauge(flatten_name($name), $value);
+    return;
+}
+
 1;
