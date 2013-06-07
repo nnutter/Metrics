@@ -2,18 +2,16 @@ use strict;
 use warnings;
 
 use Test::More;
+use Metrics::Counter;
+use Metrics::Collector::HASH;
 
 my $total_tests = 0;
 
 do {
     $total_tests += 9;
 
-    use_ok('Metrics::Collector::HASH');
-
     my $collector = Metrics::Collector::HASH->new(host => '', port => '');
     ok($collector, 'created a collector');
-
-    use_ok('Metrics::Counter');
 
     my $pennies = Metrics::Counter->new(name => 'pennies', collector => $collector);
     ok($pennies, 'created a counter');
