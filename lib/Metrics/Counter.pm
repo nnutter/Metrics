@@ -42,11 +42,12 @@ sub decrement {
 1;
 
 __END__
+
 =pod
 
 =head1 NAME
 
-Metrics::Counter - Delegate relative changes to a Metrics::Collector.
+Metrics::Counter - Delegates relative changes to a Metrics::Collector.
 
 =head1 VERSION
 
@@ -65,8 +66,7 @@ version ALPHA
 
 =head1 DESCRIPTION
 
-This module delegates relative changes for a named counter, e.g.
-'pennies', to a collector for reporting (Graphite) or
-aggregation (Statsd).
+This module delegates relative changes for a named counter, e.g.  'pennies', to
+a collector for aggregation (StatsD).
 
 =cut
