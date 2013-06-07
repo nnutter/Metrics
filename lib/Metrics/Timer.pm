@@ -15,17 +15,25 @@ sub mark {
     my $self = shift;
     my $subname = shift;
 
+    my @names;
+
     my $name = $self->name;
+    if (ref($name) eq 'ARRAY') {
+        push @names, @$name;
+    } else {
+        push @names, $name;
+    }
+
     if ($subname) {
-        if (ref($name) eq 'ARRAY') {
-            $name = [@$name, $subname];
+        if (ref($subname) eq 'ARRAY') {
+            push @names, @$subname;
         } else {
-            $name = [$name, $subname];
+            push @names, $subname;
         }
     }
 
     my $elapsed_ms = int(Time::HiRes::tv_interval($self->{start}) * 1000);
-    $self->collector->timing($name, $elapsed_ms);
+    $self->collector->timing(\@names, $elapsed_ms);
     return;
 }
 

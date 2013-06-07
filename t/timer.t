@@ -9,7 +9,7 @@ use Metrics::Collector::HASH;
 plan tests => 2;
 
 subtest 'flatten_name' => sub {
-    plan tests => 6;
+    plan tests => 12;
 
     my $collector = Metrics::Collector::HASH->new(host => '', port => '');
     ok($collector, 'created a collector');
@@ -26,6 +26,17 @@ subtest 'flatten_name' => sub {
     my $flat_name = Metrics::Collector::HASH::flatten_name($name);
     like($flat_name, qr/$name->[0]/, "flat_name is like $name->[0]");
     like($flat_name, qr/$name->[1]/, "flat_name is like $name->[1]");
+    ok($timer->collector->value_of($flat_name) >= 0, 'accessed value by flat_name');
+
+    my $bag_one = ['bag', 'one'];
+    $timer->mark($bag_one);
+    ok($timer->collector->value_of([@$name, @$bag_one]) >= 0, 'accessed value by arrayref');
+
+    $flat_name = Metrics::Collector::HASH::flatten_name([@$name, @$bag_one]);
+    like($flat_name, qr/$name->[0]/, "flat_name is like $name->[0]");
+    like($flat_name, qr/$name->[1]/, "flat_name is like $name->[1]");
+    like($flat_name, qr/$bag_one->[0]/, "flat_name is like $bag_one->[0]");
+    like($flat_name, qr/$bag_one->[1]/, "flat_name is like $bag_one->[1]");
     ok($timer->collector->value_of($flat_name) >= 0, 'accessed value by flat_name');
 };
 
