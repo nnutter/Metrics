@@ -20,12 +20,12 @@ do {
 
     is($load_time->collector->value_of('load_time'), undef, 'initial value of "load_time" is undefined');
 
-    $load_time->start;
+    $load_time->reset();
 
     use_ok('Time::HiRes');
     Time::HiRes::usleep(100_000); # timer reports ms not us
 
-    $load_time->stop;
+    $load_time->mark();
     ok($load_time->collector->value_of('load_time') >= 100, '"load_time" now has a reported timing')
         or diag('load_time = ' . $load_time->collector->value_of('load_time'));
 };
