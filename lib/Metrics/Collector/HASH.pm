@@ -6,7 +6,17 @@ use base 'Metrics::Collector';
 
 sub new {
     my $class = shift;
-    my $self = $class->SUPER::new(@_);
+    my %params = @_;
+
+    unless (exists $params{host}) {
+        $params{host} = '';
+    }
+
+    unless (exists $params{port}) {
+        $params{port} = '';
+    }
+
+    my $self = $class->SUPER::new(%params);
     $self->{VALUE} = {};
     return $self;
 }

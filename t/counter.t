@@ -10,7 +10,7 @@ plan tests => 2;
 subtest 'flatten_name' => sub {
     plan tests => 6;
 
-    my $collector = Metrics::Collector::HASH->new(host => '', port => '');
+    my $collector = Metrics::Collector::HASH->new();
     ok($collector, 'created a collector');
 
     my $name = ['counter', 'beans'];
@@ -29,7 +29,7 @@ subtest 'flatten_name' => sub {
 subtest 'operations' => sub {
     plan tests => 7;
 
-    my $collector = Metrics::Collector::HASH->new(host => '', port => '');
+    my $collector = Metrics::Collector::HASH->new();
     ok($collector, 'created a collector');
 
     my $pennies = Metrics::Counter->new(name => 'pennies', collector => $collector);

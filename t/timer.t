@@ -11,7 +11,7 @@ plan tests => 2;
 subtest 'flatten_name' => sub {
     plan tests => 12;
 
-    my $collector = Metrics::Collector::HASH->new(host => '', port => '');
+    my $collector = Metrics::Collector::HASH->new();
     ok($collector, 'created a collector');
 
     my $name = ['timer', 'beans'];
@@ -43,7 +43,7 @@ subtest 'flatten_name' => sub {
 subtest 'operations' => sub {
     plan tests => 4;
 
-    my $collector = Metrics::Collector::HASH->new(host => '', port => '');
+    my $collector = Metrics::Collector::HASH->new();
     ok($collector, 'created a collector');
 
     my $load_time = Metrics::Timer->new(name => 'load_time', collector => $collector);
